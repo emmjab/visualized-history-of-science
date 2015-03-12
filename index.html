@@ -1,69 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-            <title>D3 Page Template</title>
-            <script type="text/javascript" src="d3/d3.js"></script>
-            </head>
-    <body>
-        <script type="text/javascript">
-            // Your beautiful D3 code will go here
-            
-            var w = 1400;
-            var h = 100;
-            var barPadding = 10;
-            
-            var svg = d3.select("body")
-                        .append("svg")
-                        .attr("width", w)
-                        .attr("height", h);
-            
-            
-            var dataset;
-            
-            d3.csv("simple_journal_dataset.csv", function(error, data) {
-                   
-                   if (error){
-                   console.log(error);
-                   }else {
-                   
-                    dataset = data.slice(0,100);
-                    console.log(data);
+<head>
+    <meta charset="utf-8">
+    <title>D3 Page Template</title>
+    <script type="text/javascript" src="d3/d3.js"></script>
+</head>
+<body>
+    <script type="text/javascript">
+        // Your beautiful D3 code will go here
+        
+        var w = 1400;
+        var h = 100;
+        var barPadding = 10;
+        
+        var svg = d3.select("body")
+        .append("svg")
+        .attr("width", w)
+        .attr("height", h);
+        
+        
+        var dataset;
 
-                    //var field_color_map = map_colors_to_fields(unique_fields(d.field));
-                    //console.log(field_color_map);
-                   
-                    var color = d3.scale.category10();
+        d3.csv("simple_journal_dataset.csv", function(error, data) {
 
-                    //do stuff with data and create viz
-                    var rects = svg.selectAll("rect")
-                                    .data(dataset)
-                                    .enter()
-                                    .append("rect");
-                   
-                    rects.attr("x", function(d,i) {
-                                return i*(w/dataset.length);
-                                })
-                            .attr("y",function(d,i) {
-                                  //console.log(d.i_date);
-                                    return h - (d.i_date/100 *4);
-                                  })
-                            .attr("width",w/dataset.length - barPadding)
-                            .attr("height",function(d) {
-                                return (d.i_date/100 *4);
-                            })
-                            .attr("fill", function(d) {
-                                return color(d.field);
-                            })
-                    }
-              });
+            if (error){
+               console.log(error);
+            }else {
+
+                dataset = data.slice(0,100);
+                console.log(data);
+
+                //var field_color_map = map_colors_to_fields(unique_fields(d.field));
+                //console.log(field_color_map);
+
+                var color = d3.scale.category10();
+
+                //do stuff with data and create viz
+                var rects = svg.selectAll("rect")
+                .data(dataset)
+                .enter()
+                .append("rect");
+
+                rects.attr("x", function(d,i) {
+                    return i*(w/dataset.length);
+                })
+                .attr("y", function(d,i) {
+                    //console.log(d.i_date);
+                    return h - (d.i_date/100 *4);
+                })
+                .attr("width", w/dataset.length - barPadding)
+                .attr("height", function(d) {
+                    return (d.i_date/100 *4);
+                })
+                .attr("fill", function(d) {
+                    return color(d.field);
+                })
+            }
+        });
 
 
 //color = d3.scale.category10()
 //.attr(“fill”, function(d) {color(d.year())}
 //hslpicker.com
-                   
 
-            </script>
-    </body>
+
+</script>
+</body>
 </html>
