@@ -20,31 +20,6 @@
             
             
             var dataset;
-
-            // var unique_fields = function(d) {
-
-            //     var unique = [];
-
-            //     for (int i = 0; i < d.field.length; i++) {
-            //         if (!unique.contains(d.field[i]) {
-            //             unique.push(d.field[i]);
-            //         }
-            //     }
-                
-            //     console.log(unique.length);
-            //     return unique;
-                
-            // };
-
-            // var map_colors_to_fields = function(unique_fields) {
-            //     var field_map = [];
-
-            //     for (int i=0; i < unique_fields.length; i++) {
-            //         field_map.append({field:unique_fields[i], color:"rgb(0, 0, " + (Math.round(i*255/unique_fields.length)) + ")"});
-            //     }
-
-            //     return field_map;
-            // }
             
             d3.csv("simple_journal_dataset.csv", function(error, data) {
                    
@@ -77,15 +52,9 @@
                             .attr("height",function(d) {
                                 return (d.i_date/100 *4);
                             })
-                            //.attr("fill", function(d) {
-                            //   return "rgb(0, 0, " + (Math.round(d.i_date /10)) + ")";
-                            //})
                             .attr("fill", function(d) {
                                 return color(d.field);
                             })
-                            // .attr("fill", function(d) {
-                            //     return "rgb(0, 0, " + c(d.field) + ")";
-                            // });
                     }
               });
 
