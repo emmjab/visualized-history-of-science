@@ -68,9 +68,18 @@
             }
         });
 
-        /*var axisScale = d3.scale.linear()
-                                .domain([, 2020])
-                                .range([1700, 2020])*/
+        var xScale = d3.scale.linear()
+                                .domain([1700, 2020])
+                                .range([0, w]);
+
+        var xAxis = d3.svg.axis()
+                          .scale(xScale)
+                          .orient("bottom");
+        svg.append("g")
+            .attr("class", "axis")
+            .attr("transform", "translate(0," + 50 + ")")
+            .call(xAxis);
+
 
 
 //color = d3.scale.category10()
