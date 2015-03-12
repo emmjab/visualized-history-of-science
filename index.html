@@ -6,6 +6,7 @@
     <script type="text/javascript" src="d3/d3.js"></script>
 </head>
 <body>
+    <input type="text"></input>
     <script type="text/javascript">
         // Your beautiful D3 code will go here
         
@@ -27,7 +28,7 @@
                console.log(error);
             }else {
 
-                dataset = data.slice(0,100);
+                dataset = data.slice(0,100); //it works on all the data!
                 console.log(data);
 
                 //var field_color_map = map_colors_to_fields(unique_fields(d.field));
@@ -36,35 +37,49 @@
                 var color = d3.scale.category10();
 
                 //do stuff with data and create viz
-                var rects = svg.selectAll("circle")
+                var circles = svg.selectAll("circle")
                 .data(dataset)
                 .enter()
                 .append("circle");
 
-                rects.attr("cx", function(d,i) {
-                    //return i*(w/dataset.length);
-                    var i_dates = dataset.map(function(d) {return +d.i_date});
-                    var x_pos =  (d.i_date - Math.min.apply(null,i_dates))/(Math.max.apply(null,i_dates) - Math.min.apply(null,i_dates))*w;
-                    console.log(i_dates);
-                    console.log(x_pos);
-                    return x_pos;
-                })
-                .attr("cy", function(d,i) {
-                    //console.log(d.i_date);
-                    //return h - (d.i_date/100 *4);
-                    return 10;
-                })
-                .attr("r", function(d,i) {
-                    return 10;
-                })
-                //.attr("width", w/dataset.length - barPadding)
-                //.attr("height", function(d) {
-                //    return 20;
-                //})
-                .attr("fill", function(d) {
-                    return color(d.field);
-                })
-                //.scale.linear().domain([Math.min(dataset.i_date), Math.max(dataset.i_date)]).range([0,1400])
+                var plot_filtered_data = function() {                
+
+                    circles.filter(function(d){ console.log(d);
+                        var f = document.getElementsByTagName("input")[0].value;
+                        console.log(f);
+                        return d.field === f; 
+                        //return true;
+                    })
+
+                    .attr("cx", function(d,i) {
+                        //return i*(w/dataset.length);
+                        var i_dates = dataset.map(function(d) {return +d.i_date});
+                        var x_pos =  (d.i_date - Math.min.apply(null,i_dates))/(Math.max.apply(null,i_dates) - Math.min.apply(null,i_dates))*w;
+                        console.log(i_dates);
+                        console.log(x_pos);
+                        return x_pos;
+                    })
+                    .attr("cy", function(d,i) {
+                        //console.log(d.i_date);
+                        //return h - (d.i_date/100 *4);
+                        return 10;
+                    })
+                    .attr("r", function(d,i) {
+                        return 10;
+                    })
+                    //.attr("width", w/dataset.length - barPadding)
+                    //.attr("height", function(d) {
+                    //    return 20;
+                    //})
+                    .attr("fill", function(d) {
+                        return color(d.field);
+                    })
+                    //.scale.linear().domain([Math.min(dataset.i_date), Math.max(dataset.i_date)]).range([0,1400])
+                }
+
+                plot_filtered_data();
+                document.getElementsByTagName("input")[0].addEventListener("input",plot_filtered_data);
+
             }
         });
 
