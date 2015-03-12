@@ -36,31 +36,41 @@
                 var color = d3.scale.category10();
 
                 //do stuff with data and create viz
-                var rects = svg.selectAll("rect")
+                var rects = svg.selectAll("circle")
                 .data(dataset)
                 .enter()
-                .append("rect");
+                .append("circle");
 
-                rects.attr("x", function(d,i) {
+                rects.attr("cx", function(d,i) {
                     //return i*(w/dataset.length);
                     var i_dates = dataset.map(function(d) {return +d.i_date});
-                    return (d.i_date - Math.min.apply(null,i_dates))/(Math.max.apply(null,i_dates) - Math.min.apply(null,i_dates))*w;
+                    var x_pos =  (d.i_date - Math.min.apply(null,i_dates))/(Math.max.apply(null,i_dates) - Math.min.apply(null,i_dates))*w;
+                    console.log(i_dates);
+                    console.log(x_pos);
+                    return x_pos;
                 })
-                .attr("y", function(d,i) {
+                .attr("cy", function(d,i) {
                     //console.log(d.i_date);
                     //return h - (d.i_date/100 *4);
                     return 10;
                 })
-                .attr("width", w/dataset.length - barPadding)
-                .attr("height", function(d) {
-                    return 20;
+                .attr("r", function(d,i) {
+                    return 10;
                 })
+                //.attr("width", w/dataset.length - barPadding)
+                //.attr("height", function(d) {
+                //    return 20;
+                //})
                 .attr("fill", function(d) {
                     return color(d.field);
                 })
                 //.scale.linear().domain([Math.min(dataset.i_date), Math.max(dataset.i_date)]).range([0,1400])
             }
         });
+
+        /*var axisScale = d3.scale.linear()
+                                .domain([, 2020])
+                                .range([1700, 2020])*/
 
 
 //color = d3.scale.category10()
